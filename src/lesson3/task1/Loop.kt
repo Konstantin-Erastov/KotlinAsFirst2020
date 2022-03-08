@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import java.lang.Math.abs
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -73,14 +74,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var x = Math.abs(n)
-    var m = 0
-
-    do {
-        x = x / 10
-        m = m + 1
-    } while (x > 0)
-    return m
+    var num = abs(n)
+    var c = 1
+    while (num > 9) {
+        c += 1
+        num /= 10
+    }
+    return c
 }
 
 /**
@@ -89,7 +89,17 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var fibsum = 2
+    for (i in 1..n - 2) {
+        fibsum = fib1 + fib2
+        fib1 = fib2
+        fib2 = fibsum
+    }
+    return fib2
+}
 
 /**
  * Простая (2 балла)
@@ -223,7 +233,20 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var quant = 0
+    var squar = 0
+    for (i in 1..n) {
+        if (quant < n) {
+            squar = i * i
+            quant += digitNumber(squar)
+        }
+    }
+    for (i in 0 until quant - n) {
+        squar /= 10
+    }
+    return squar % 10
+}
 
 /**
  * Сложная (5 баллов)
@@ -234,4 +257,17 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var quant = 0
+    var fibn = 0
+    for (i in 1..n) {
+        if (quant < n) {
+            fibn = fib(i)
+            quant += digitNumber(fibn)
+        }
+    }
+    for (i in 0 until quant - n) {
+        fibn /= 10
+    }
+    return fibn % 10
+}
